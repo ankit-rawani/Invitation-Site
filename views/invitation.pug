@@ -8,4 +8,16 @@ html(lang="en")
         title=title
     body
         canvas(id='canvas')
+        div(id='form')
+            |Add participants:
+            br
+            input(type="radio", name="participants", id='all')
+            label(for="all") Everyone
+            br
+            input(type="radio", name="participants", id='custom')
+            label(for="custom") Custom
+            br
+            br
+            div(id='list')
+            div(id='submit') OKAY
         script(src="/javascripts/invitation.js")

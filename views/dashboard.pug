@@ -42,7 +42,12 @@ html(lang="en")
                 br
                 |Event host
                 br
-                input(type="text", name="eventHost")
+                input(type="text", name="eventHost", value=name)
+                br
+                br
+                |Host ID
+                br
+                input(type="text", name="userid", value=userid)
                 br
                 br
                 |Invitation body
@@ -50,14 +55,5 @@ html(lang="en")
                 textarea(name="invitationBody", id='text', form="event_form")
                 br
                 br
-                //- |Add participants:
-                //- br
-                //- input(type="radio", name="participants", id='all')
-                //- label(for="all") Everyone
-                //- br
-                //- input(type="radio", name="participants", id='custom')
-                //- label(for="custom") Custom
-                //- br
-                //- br
                 input(type="submit", value="Preview Invitation", id='submit')
             

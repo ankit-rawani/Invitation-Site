@@ -1,4 +1,5 @@
 var express = require ('express');
+var bcrypt = require('bcrypt')
 var users = require ('../models/userModel');
 var router = express.Router ();
 
@@ -8,8 +9,12 @@ router.post ('/', function (req, res, next) {
     if(err) return handleError(err, res) 
     // console.log(user)
     if(user) {
-        if(user.password == req.body.password) res.render('dashboard', {title: user.email, name: user.name, email: user.email})
+      bcrypt.compare(req.body.password, user.password, function(err, result) {
+        if(err) return console.log(err)
+
+        if (result) res.render('dashboard', { name: user.name, userid: user.userid })
         else res.send('Wrong password')
+      })
     }
     else res.send("User doesn't exist")
   })
