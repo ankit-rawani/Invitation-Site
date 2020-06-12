@@ -10,6 +10,9 @@ var loginRouter = require('./routes/login');
 var regRouter = require ('./routes/register');
 var inviteRouter = require('./routes/invitation')
 var sendRouter = require('./routes/sendInvitation')
+var invitationToMeRouter = require('./routes/invitationsToMe')
+var profileRouter = require('./routes/profile')
+var eventRouter = require('./routes/myEvents')
 
 var app = express();
 require('dotenv').config()
@@ -37,6 +40,9 @@ app.use('/', loginRouter);
 app.use('/register', regRouter)
 app.use ('/createInvitation', inviteRouter);
 app.use('/sendInvitation', sendRouter);
+app.use('/invitations', invitationToMeRouter);
+app.use('/events', eventRouter);
+app.use('/profile', profileRouter);
 
 
 // catch 404 and forward to error handler
