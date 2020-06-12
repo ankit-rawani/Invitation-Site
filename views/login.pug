@@ -1,0 +1,28 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/login.css')
+    link(rel="stylesheet", href="")
+    link(href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap", rel="stylesheet")
+  body
+    div(class='login_card') 
+        h1(class='login') Login
+        form(action="/dashboard/", method="post")
+            |E-mail 
+            br
+            input(type='text', name='email', id='email')
+            br
+            br
+            |Password
+            br
+            input(type='password', name='password', id='password')
+            br
+            br
+            input(type="submit", value="Sign in", id='submit')
+            br
+            a(href='/register') New User? Register here
+            a(href='/changePass') Forgot password?
+
+
+

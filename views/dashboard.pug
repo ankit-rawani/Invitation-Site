@@ -1,0 +1,63 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href='/stylesheets/dashboard.css')
+        link(href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap", rel="stylesheet")
+        title Dashboard
+    body
+        nav 
+            div(id='nav-body')
+                div(id='hello') Hello #{name}!
+                a(href='/invitations')
+                    div(id='invitations') Invitations
+                a(href='/events')
+                    div(id='events') Events
+                a(href='/profile')
+                    div(id='profile') Profile
+        div(class='createEvent')
+            div(id='createEventText') Create New Event
+            br
+            form(action="/createInvitation", method="get", id="event_form")
+                |Event name
+                br
+                input(type="text", name="eventName")
+                br
+                br
+                |Event description (Keep it short)
+                br
+                textarea(name="eventDescription", id='text', form="event_form")
+                br
+                br
+                |Date
+                br
+                input(type="date", name="eventDate")
+                br
+                br
+                |Time
+                br
+                input(type="time", name="eventTime")
+                br
+                br
+                |Event host
+                br
+                input(type="text", name="eventHost")
+                br
+                br
+                |Invitation body
+                br
+                textarea(name="invitationBody", id='text', form="event_form")
+                br
+                br
+                //- |Add participants:
+                //- br
+                //- input(type="radio", name="participants", id='all')
+                //- label(for="all") Everyone
+                //- br
+                //- input(type="radio", name="participants", id='custom')
+                //- label(for="custom") Custom
+                //- br
+                //- br
+                input(type="submit", value="Preview Invitation", id='submit')
+            

@@ -1,0 +1,35 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/login.css')
+    link(href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap", rel="stylesheet")
+  body
+    div(class='login_card') 
+        h1(class='login') Register
+        form(action="/users/", method="post")
+            |Name 
+            br
+            input(type='text', name='name', id='name')
+            br
+            br
+            |E-mail 
+            br
+            input(type='text', name='email', id='email')
+            br
+            br
+            |Password
+            br
+            input(type='password', name='password', id='password')
+            br
+            br
+            |Confirm Password
+            br
+            input(type='password', name='cpassword', id='conf_password')
+            br
+            br
+            input(type="submit", value="Sign up", id='submit')
+            br
+            a(href='/') Already a User? Sign in
+
+
