@@ -1,6 +1,6 @@
 var express = require ('express');
-var bcrypt = require('bcrypt')
-var users = require ('../models/userModel');
+var User = require ('../models/userModel');
+var inviteDB = require('../models/invitationsDB')
 var router = express.Router ();
 
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
@@ -48,7 +48,7 @@ router.post('/invitation/send', ensureAuthenticated, async function (req, res, n
 });
 
 router.get('/profile', ensureAuthenticated, function (req, res, next) {
-  res.render('profile', {});
+  res.render('profile', {user: req.user});
 });
 
 

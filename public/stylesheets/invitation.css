@@ -2,6 +2,7 @@ body {
     margin: 0%;
     padding: 0%;
     font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(to bottom right, #00a2ff, #00ff55);
 }
 
 canvas {
@@ -12,6 +13,8 @@ canvas {
 
 #list {
     align-items: center;
+    background-color: white;
+    border: 1px solid rgb(204, 204, 204);
 }
 
 #form{
