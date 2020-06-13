@@ -3,13 +3,16 @@ html(lang="en")
     head
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="/stylesheets/profile.css")
+        link(href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap", rel="stylesheet")
         title Profile
     body
-        h1 PROFILE PAGE IS UNDER CONSTRUCTION
-        ul
-            li= user.name
-            li= user.email
-            li= user.userid
-            li= user.password
-            li= user._id
-            
+    div(id='root')
+        div(id='header') Profile
+        br
+        div(id='image')
+            img(src="/images/placeholder.png")
+        div(id='details')
+            div(id='name')= user.name
+            div(id='userid') @#{user.userid}
+            div(id='email') Email: #{user.email}

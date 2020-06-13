@@ -38,6 +38,7 @@ var participants = []
 custom.addEventListener('click', async ()=>{
     CUSTOM_PARTICIPANTS = true
     
+    participants = []
     while(list.firstChild){
         list.removeChild(list.firstChild)
     }
@@ -115,12 +116,19 @@ function addEvents(){
 }
 
 
-all.addEventListener('click', () => {
+all.addEventListener('click', async () => {
     CUSTOM_PARTICIPANTS = false
 
     while (list.firstChild) {
         list.removeChild(list.firstChild)
     }
+
+    participants = []
+    await getData()
+
+    await users.forEach(e => {
+        participants.push(e['userid'])
+    })
 })
 
 async function getData(){

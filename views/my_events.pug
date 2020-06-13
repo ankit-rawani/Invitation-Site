@@ -3,6 +3,27 @@ html(lang="en")
     head
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel='stylesheet', href='/stylesheets/my_events.css')
+        link(href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap", rel="stylesheet")
         title Events
     body
-        h1 EVENTS PAGE IS UNDER-CONSTRUCTION
+        div(id='root')
+            nav Events hosted by me
+            div(id='list')
+                each val in events
+                    div(class='card')
+                        div(class='image')
+                            img(src="/images/placeholder.png")
+                        div(class='details')
+                            div(class='name')= val.name
+                            div(class='description')= val.description
+                            div(class='date')= val.date
+                            div(class='time')= val.time
+                        div(class='buttons')
+                            div
+                                div(class='delete') Delete
+                                div(class='view') View
+                        div(data-id=val._id, data-name=val.name)
+    script(src="/javascripts/my_events.js")
+                        
+

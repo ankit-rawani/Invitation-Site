@@ -20,7 +20,7 @@ require('./config/passport')(passport);
 //Set up mongodb connection
 var mongoose = require ('mongoose');
 var mongoDB = process.env.DB_LINK;
-mongoose.connect (mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect (mongoDB, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false});
 var db = mongoose.connection;
 db.on ('error', console.error.bind (console, 'MongoDB connection error:'));
 

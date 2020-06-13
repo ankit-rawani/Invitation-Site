@@ -3,6 +3,71 @@ html(lang="en")
     head
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel='stylesheet', href='/stylesheets/invitations_received.css')
+        link(href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap", rel="stylesheet")
         title Invitations
     body
-        h1 INVITATIONS PAGE IS UNDER CONSTRUCTION
+        div(id='root')
+            div(id='list')
+                div(id='header') Invitations received
+                nav
+                    div(id="a_button") Accepted by me
+                    div(id="r_button") Rejected by me
+                    div(id="p_button") Pending
+                    div(id="refresh") Refresh
+                div(id='rejected')
+                    each invitation in invitations
+                        if(invitation.status == 'r')
+                            div(class='card')
+                                div(class='image')
+                                    img(src="/images/placeholder.png")
+                                div(class='details')
+                                    div(class='name')=invitation.name
+                                    div(class='description')=invitation.description
+                                    div(class='date') Date: #{invitation.date}
+                                    div(class='time') Time: #{invitation.time}
+                                    div(class='host') Host: #{invitation.host}
+                                div(class='buttons')
+                                    div
+                                        div(class='accept') Accept
+                                        div(class='reject') Reject
+                                        div(class='view') View
+                                div(data-id=invitation._id)
+                div(id='accepted')
+                    each invitation in invitations
+                        if(invitation.status == 'a')
+                            div(class='card')
+                                div(class='image')
+                                    img(src="/images/placeholder.png")
+                                div(class='details')
+                                    div(class='name')=invitation.name
+                                    div(class='description')=invitation.description
+                                    div(class='date') Date: #{invitation.date}
+                                    div(class='time') Time: #{invitation.time}
+                                    div(class='host') Host: #{invitation.host}
+                                div(class='buttons')
+                                    div
+                                        div(class='accept') Accept
+                                        div(class='reject') Reject
+                                        div(class='view') View
+                                div(data-id=invitation._id)
+                div(id='pending')
+                    each invitation in invitations
+                        if(invitation.status == 'p')
+                            div(class='card')
+                                div(class='image')
+                                    img(src="/images/placeholder.png")
+                                div(class='details')
+                                    div(class='name')=invitation.name
+                                    div(class='description')=invitation.description
+                                    div(class='date') Date: #{invitation.date}
+                                    div(class='time') Time: #{invitation.time}
+                                    div(class='host') Host: #{invitation.host}
+                                div(class='buttons')
+                                    div
+                                        div(class='accept') Accept
+                                        div(class='reject') Reject
+                                        div(class='view') View
+                                div(data-id=invitation._id)
+        script(src='/javascripts/invitations_recieved.js')
+        

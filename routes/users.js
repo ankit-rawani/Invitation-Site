@@ -117,17 +117,19 @@ router.get('/logout', (req, res) => {
 router.get('/getUsers', async function (req, res, next) {
   var data = []
 
-  await User.find({}, async function(err, user_list){
+  await User.find({}, function(err, user_list){
     user_list.forEach(user => {
       data.push({
         name: user.name,
         userid: user.userid
       });
     })
+
+    res.send(data)
+    console.log(data)
   })
 
-  res.send(data)
-  console.log(data)
+  
   
 })
 
