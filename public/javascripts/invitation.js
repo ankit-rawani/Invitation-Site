@@ -123,10 +123,6 @@ all.addEventListener('click', () => {
     }
 })
 
-submit.addEventListener('click', ()=>{
-    sendData()
-})
-
 async function getData(){
     //get data from the server, the names of all the users
     const response = await fetch('/users/getUsers')
@@ -156,7 +152,7 @@ async function sendData() {
         body: JSON.stringify(data)
     }
 
-    var response = await fetch('/sendInvitation/', options)
+    var response = await fetch('/dashboard/invitation/send', options)
     window.open(response.url, "_self")
     
     submit.removeEventListener('mousedown', sendData)

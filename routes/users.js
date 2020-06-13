@@ -1,41 +1,118 @@
 var express = require('express');
 var bcrypt = require('bcrypt')
-var users = require('../models/userModel')
+var User = require('../models/userModel')
 var router = express.Router();
+var passport = require('passport')
+const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
+
 var saltRounds = 10
 
-router.post('/', async function(req, res, next) {
-  await users.findOne({ email: req.body.email }).exec(function (err, user) {
-    if (err) return handleError(err, res)
-    // console.log(user)
-    if (user) {
-      res.send('E-mail ID already exists')
-      console.log(user)
-    }
-    else {
-      users.findOne({ userid: req.body.userid }).exec(function (err, u) {
-        if (err) return handleError(err, res)
-        // console.log(user)
-        if (u) {
-          res.send('User ID already exist, choose another')
-        }
-        else {
-          bcrypt.hash(req.body.password, saltRounds, (err, hash)=>{
-            if(err) return console.log(err)
+// Login Page
+router.get('/login',forwardAuthenticated, (req, res, next) => res.render('login'))
 
-            users.create({ email: req.body.email, password: hash, name: req.body.name, userid: req.body.userid }, function(err, doc){
-              if (err) return handleError(err)
-            })
-            res.redirect('/')
-          })
-          
-        }
-      })
+// Register Page
+router.get('/register', forwardAuthenticated, (req, res, next) => res.render('register'));
 
-      
-    }
-  })
-})
+
+// Register
+router.post('/register', (req, res) => {
+  const { name, email, userid, password, cpassword } = req.body;
+  // console.log(req.body)
+  let errors = [];
+
+  if (!name || !email || !password || !cpassword || !userid) {
+    errors.push({ msg: 'Please enter all fields' });
+  }
+
+  if (password != cpassword) {
+    errors.push({ msg: 'Passwords do not match' });
+  }
+
+  if (password.length < 6) {
+    errors.push({ msg: 'Password must be at least 6 characters' });
+  }
+
+  if (errors.length > 0) {
+    res.render('register', {
+      errors,
+      name,
+      email,
+      userid,
+      password,
+      cpassword
+    });
+  } else {
+    User.findOne({ email: email }).then(user => {
+      if (user) {
+        errors.push({ msg: 'Email already exists' });
+        res.render('register', {
+          errors,
+          name,
+          email,
+          userid,
+          password,
+          cpassword
+        });
+      } else {
+        User.findOne({ userid: userid }).then(user => {
+          if (user) {
+            errors.push({ msg: 'UserID already exists' });
+            res.render('register', {
+              errors,
+              name,
+              email,
+              userid,
+              password,
+              cpassword
+            });
+        }
+        else{
+        const newUser = new User({
+          email,
+          password,
+          name,
+          userid
+        });
+
+        bcrypt.genSalt(saltRounds, (err, salt) => {
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw err;
+            newUser.password = hash;
+            newUser
+              .save()
+              .then(user => {
+                req.flash(
+                  'success_msg',
+                  'You are now registered and can log in'
+                );
+                res.redirect('/users/login');
+              })
+              .catch(err => console.log(err));
+          });
+        
+        });
+      }
+    });
+  }
+});
+}
+});
+
+// Login
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', {
+    successRedirect: '/dashboard',
+    failureRedirect: '/users/login',
+    failureFlash: true
+  })(req, res, next);
+});
+
+// Logout
+router.get('/logout', (req, res) => {
+  req.logout();
+  req.flash('success_msg', 'You are logged out');
+  res.redirect('/users/login');
+});
 
 router.get('/getUsers', async function (req, res, next) {
   var data = []
@@ -55,8 +132,6 @@ router.get('/getUsers', async function (req, res, next) {
 })
 
 
-function handleError(e){
-  console.log(e)
-}
+
 
 module.exports = router

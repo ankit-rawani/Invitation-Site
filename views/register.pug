@@ -2,25 +2,28 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/login.css')
+    link(rel='stylesheet', href='/stylesheets/register.css')
     link(href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap", rel="stylesheet")
   body
     div(class='login_card') 
         h1(class='login') Register
-        form(action="/users/", method="post")
+        form(action="/users/register/", method="post")
+            if(errors)
+              each val in errors
+                div(id="errors")= val.msg                
             |Name 
             br
-            input(type='text', name='name', id='name')
+            input(type='text', name='name', id='name', value=name)
             br
             br
             |E-mail 
             br
-            input(type='text', name='email', id='email')
+            input(type='text', name='email', id='email', value=email)
             br
             br
             |User ID 
             br
-            input(type='text', name='userid', id='userid')
+            input(type='text', name='userid', id='userid', value=userid)
             br
             br
             |Password
@@ -35,6 +38,6 @@ html
             br
             input(type="submit", value="Sign up", id='submit')
             br
-            a(href='/') Already a User? Sign in
+            a(href='/users/login') Already a User? Sign in
 
 

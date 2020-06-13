@@ -3,7 +3,6 @@ body {
     padding: 0;
     background: linear-gradient(to bottom right, #00a2ff, #00ff55);
     font-family: 'Montserrat', sans-serif;
-    height: 100vh;
 }
 
 .login_card{
@@ -47,24 +46,13 @@ a{
     
 }
 
-#error{
+#errors{
     margin: 10px auto;
     padding: 4%;
     width: 90%;
     background-color: #faa;
     border: 1px solid rgb(133, 0, 0);
     color: rgb(133, 0, 0);
-    border-radius: 2px;
-    font-size: x-small;
-}
-
-#success{
-    margin: 10px auto;
-    padding: 4%;
-    width: 90%;
-    background-color: rgb(189, 255, 181);
-    border: 1px solid rgb(0, 138, 53);
-    color: rgb(0, 139, 53);
     border-radius: 2px;
     font-size: x-small;
 }

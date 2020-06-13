@@ -1,5 +1,18 @@
-extends layout
-
-block content
-  h1= title
-  p Welcome to #{title}
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title= title
+    link(href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap", rel="stylesheet")
+    link(rel="stylesheet", href="/stylesheets/index.css")
+  body
+    div(id='root')
+      nav
+        a(href="#", id='welcome') Welcome!
+        a(href="/users/login") Login
+        a(href="/users/register") Register
+        a(href="#") About
+      h1 Welcome to HostYourEvent.com
+      p Login or register today to start hosting your events.
+      

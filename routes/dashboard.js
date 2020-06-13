@@ -3,27 +3,54 @@ var bcrypt = require('bcrypt')
 var users = require ('../models/userModel');
 var router = express.Router ();
 
-/* GET users listing. */
-router.post ('/', function (req, res, next) {
-  users.findOne({email: req.body.email}).exec(function (err, user) {
-    if(err) return handleError(err, res) 
-    // console.log(user)
-    if(user) {
-      bcrypt.compare(req.body.password, user.password, function(err, result) {
-        if(err) return console.log(err)
+const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
-        if (result) res.render('dashboard', { name: user.name, userid: user.userid })
-        else res.send('Wrong password')
-      })
-    }
-    else res.send("User doesn't exist")
-  })
 
+router.get ('/', ensureAuthenticated,function (req, res, next) {
+  res.render('dashboard', { name: req.user.name, userid: req.user.userid })
+  // console.log(req)
 });
 
-function handleError (e, r) {
-    r.send(e)
-    console.log (e);
-}
+router.get('/invitation/create', ensureAuthenticated, function (req, res, next) {
+  console.log(req.body)
+  res.render('invitation', { title: 'Invitation' });
+});
+
+router.get('/invitations', ensureAuthenticated, function (req, res, next) {
+  res.render('invitations_to_me', {});
+});
+
+router.get('/events', ensureAuthenticated, function (req, res, next) {
+  res.render('my_events', {});
+});
+
+router.post('/invitation/send', ensureAuthenticated, async function (req, res, next) {
+  var data = {
+    date: req.body.date,
+    time: req.body.time,
+    invitation: req.body.invitation,
+    host: req.body.host,
+    description: req.body.description,
+    name: req.body.name
+  }
+
+  await req.body.participants.forEach(element => {
+    data.participant = element
+
+    inviteDB.create(data, function (err, doc) {
+      if (err) return console.log(err)
+    })
+
+  });
+
+  // console.log(req.body)
+  res.redirect('/dashboard')
+});
+
+router.get('/profile', ensureAuthenticated, function (req, res, next) {
+  res.render('profile', {});
+});
+
+
 
 module.exports = router;

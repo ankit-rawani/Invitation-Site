@@ -16,10 +16,12 @@ html(lang="en")
                     div(id='events') Events
                 a(href='/profile')
                     div(id='profile') Profile
+                a(href='/users/logout')
+                    div(id='logout') Logout
         div(class='createEvent')
             div(id='createEventText') Create New Event
             br
-            form(action="/createInvitation", method="get", id="event_form")
+            form(action="/dashboard/invitation/create", method="get", id="event_form")
                 |Event name
                 br
                 input(type="text", name="eventName")

@@ -8,21 +8,25 @@ html
   body
     div(class='login_card') 
         h1(class='login') Login
-        form(action="/dashboard/", method="post")
-            |E-mail 
-            br
-            input(type='text', name='email', id='email')
-            br
-            br
-            |Password
-            br
-            input(type='password', name='password', id='password')
-            br
-            br
-            input(type="submit", value="Sign in", id='submit')
-            br
-            a(href='/register') New User? Register here
-            a(href='/changePass') Forgot password?
+        form(action="/users/login", method="post")
+          if(success_msg != '')
+            div(id="success")= success_msg
+          if(error_msg != '')
+            div(id="error")= error_msg
+          |E-mail 
+          br
+          input(type='text', name='email', id='email')
+          br
+          br
+          |Password
+          br
+          input(type='password', name='password', id='password')
+          br
+          br
+          input(type="submit", value="Sign in", id='submit')
+          br
+          a(href='/users/register') New User? Register here
+          a(href='/users/changePass') Forgot password?
 
 
 

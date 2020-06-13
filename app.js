@@ -3,19 +3,19 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var expressSession = require('express-session')
+var passport = require('passport');
+var flash = require('connect-flash');
 
 var dashRouter = require('./routes/dashboard');
 var usersRouter = require ('./routes/users');
-var loginRouter = require('./routes/login');
-var regRouter = require ('./routes/register');
-var inviteRouter = require('./routes/invitation')
-var sendRouter = require('./routes/sendInvitation')
-var invitationToMeRouter = require('./routes/invitationsToMe')
-var profileRouter = require('./routes/profile')
-var eventRouter = require('./routes/myEvents')
+var indexRouter = require('./routes/index');
 
 var app = express();
 require('dotenv').config()
+
+// Passport Config
+require('./config/passport')(passport);
 
 //Set up mongodb connection
 var mongoose = require ('mongoose');
@@ -30,20 +30,36 @@ app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Express session
+app.use(expressSession({
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true
+}));
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Flash middleware
+app.use(flash());
+
+// Setting Global variables
+app.use(function (req, res, next) {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
+});
+
+// Routes
+app.use('/', indexRouter);
 app.use('/dashboard', dashRouter);
 app.use('/users', usersRouter);
-app.use('/', loginRouter);
-app.use('/register', regRouter)
-app.use ('/createInvitation', inviteRouter);
-app.use('/sendInvitation', sendRouter);
-app.use('/invitations', invitationToMeRouter);
-app.use('/events', eventRouter);
-app.use('/profile', profileRouter);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
