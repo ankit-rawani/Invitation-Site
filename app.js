@@ -6,6 +6,8 @@ var logger = require('morgan');
 var expressSession = require('express-session')
 var passport = require('passport');
 var flash = require('connect-flash');
+var multer = require('multer')
+var upload = multer({ dest: 'uploads/'})
 
 var dashRouter = require('./routes/dashboard');
 var usersRouter = require ('./routes/users');
@@ -33,6 +35,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Multer middleware
+app.use(upload.array())
 
 // Express session
 app.use(expressSession({

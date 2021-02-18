@@ -83,41 +83,42 @@ router.post('/event/delete', ensureAuthenticated, function (req, res, next) {
 });
 
 router.post('/invitation/send', ensureAuthenticated, async function (req, res, next) {
-  var data = {
-    date: req.body.date,
-    time: req.body.time,
-    invitation: req.body.invitation,
-    host: req.body.host,
-    host_id: req.user.userid,
-    description: req.body.description,
-    name: req.body.name
-  }
+  // var data = {
+  //   date: req.body.date,
+  //   time: req.body.time,
+  //   invitation: req.body.invitation,
+  //   host: req.body.host,
+  //   host_id: req.user.userid,
+  //   description: req.body.description,
+  //   name: req.body.name
+  // }
 
-  var eventData = {
-    date: req.body.date,
-    time: req.body.time,
-    host: req.body.host,
-    host_id: req.user.userid,
-    description: req.body.description,
-    name: req.body.name
-  }
+  // var eventData = {
+  //   date: req.body.date,
+  //   time: req.body.time,
+  //   host: req.body.host,
+  //   host_id: req.user.userid,
+  //   description: req.body.description,
+  //   name: req.body.name
+  // }
 
-  await eventDB.create(eventData, function (err, doc) {
-    if (err) return console.log(err)
-  })
+  // await eventDB.create(eventData, function (err, doc) {
+  //   if (err) return console.log(err)
+  // })
 
-  await req.body.participants.forEach(element => {
-    data.participant = element
-    data.status = 'p'
+  // await req.body.participants.forEach(element => {
+  //   data.participant = element
+  //   data.status = 'p'
 
-    inviteDB.create(data, function (err, doc) {
-      if (err) return console.log(err)
-    })
+  //   inviteDB.create(data, function (err, doc) {
+  //     if (err) return console.log(err)
+  //   })
 
-  });
+  // });
 
-  // console.log(req.body)
-  res.redirect('/dashboard')
+  console.log(req.body.date)
+  res.end()
+  // res.redirect('/dashboard')
 });
 
 router.get('/profile', ensureAuthenticated, function (req, res, next) {

@@ -142,28 +142,38 @@ async function getData(){
 
 async function sendData() {
     //send data to the server, the names of selected participants
-    let data = {
-        'date': eventDate,
-        'time': eventTime,
-        'invitation': invitation,
-        'host': eventHost,
-        'description': eventDescription,
-        'name': eventName,
-        'participants': participants
-    }
 
-    let options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
+    canvas.toBlob(
+        async function (blob) {
+            let fd = new FormData()
+            fd.append('date', eventDate)
+            fd.append('time', eventTime)
+            fd.append('invitation', invitation)
+            fd.append('description', eventDescription)
+            fd.append('name', eventName)
+            fd.append('participants', participants)
+            fd.append('image', blob)
+
+
+            let options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: fd
+            }
+
+            console.log(blob)
+            var response = await fetch('/dashboard/invitation/send', options)
+            // window.open(response.url, "_self")
         },
-        body: JSON.stringify(data)
-    }
+        'image/jpeg', 
+        0.7
+    )
 
-    var response = await fetch('/dashboard/invitation/send', options)
-    window.open(response.url, "_self")
     
-    submit.removeEventListener('mousedown', sendData)
+    
+    // submit.removeEventListener('mousedown', sendData)
 }
 
 submit.addEventListener('mousedown', sendData)
